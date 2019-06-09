@@ -27,6 +27,11 @@ body {
     border-color: #ccc;
     background-color: #ddd;
   }
+
+  .db-dark {
+    border-color: #ccc;
+    background-color: #808040;
+  }
   
   .container::after {
     content: "";

@@ -18,6 +18,7 @@
                     <div class="ChatList">
                     </div>
                 </div>
+                <div class="testing"></div>
                 <div class="col-md-11">
                     <form class="chatForm">
                         <div class="form-group">
@@ -36,8 +37,8 @@
             
         </div>
     </div>
-<script src="js/main.js"></script>
 <script src="js/jquery-3.4.1.js"></script>
+<script src="js/main.js"></script>
 <script src="js/jquery.cookie.js"></script>
     
 </body>

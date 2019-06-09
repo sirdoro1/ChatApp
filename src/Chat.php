@@ -3,6 +3,7 @@ namespace ChatApp;
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use ChatApp\Model\Message;
 
 class Chat implements MessageComponentInterface {
     
@@ -25,6 +26,9 @@ class Chat implements MessageComponentInterface {
                 $client->send($msg);
             }
         }
+        Message::create([
+            'text' => $msg
+        ]);
     }
 
     public function onClose(ConnectionInterface $conn){
