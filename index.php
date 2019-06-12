@@ -4,14 +4,10 @@ $name = $_SESSION['name'];
 $email = $_SESSION['email'];
 $username = $_SESSION['username'];
 
-if(isset($_SESSION['user']) == ""){
+if(!isset($_SESSION['username'])){
     header('location:login-register.php');
-    exit;
+    die();
   }
-
-// if(empty($_SESSION['user'])){
-//     header('location:login-register.php');
-// }else{
 
 ?>
 <!DOCTYPE html>

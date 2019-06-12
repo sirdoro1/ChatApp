@@ -5,9 +5,8 @@ session_start();
 
 use ChatApp\Model\Users;
 
-// if(!empty($_SESSION['user'])){
+// if(isset($_SESSION['user'])){
 //     header('location:index.php');
-//     exit;
 //   }
 
 $username = $_POST['username'];
