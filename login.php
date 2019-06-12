@@ -5,9 +5,9 @@ session_start();
 
 use ChatApp\Model\Users;
 
-// if(isset($_SESSION['user'])){
-//     header('location:index.php');
-//   }
+if(isset($_SESSION['user'])){
+    header('location:index.php');
+  }
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -20,7 +20,7 @@ $check = Users::where(['username'=>$username])->first();
         $_SESSION['email'] = $check['email'];
         $_SESSION['username'] = $check['username'];
         $_SESSION['msg'] = 'Logged In Successfully';
-        header('Location:index.php');
+        header('Location:chatroom.php');
     }else{
         $_SESSION['msg'] = 'Invalid Login Details';
         header('location:login-register.php');

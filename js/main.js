@@ -1,7 +1,7 @@
     $(document).ready(function(){
 
        
-            var username = $('.name').val();
+        var username = $('.name').val();
         
         
 
@@ -25,51 +25,47 @@
         });
 
 
-        var date = new Date(),
-        formatted_date = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-        var conn = new WebSocket('ws://localhost:8080');
+        // Chat
+            var date = new Date(),
+            formatted_date = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+            var conn = new WebSocket('ws://localhost:8080');
 
-        var form = $('.chatForm');
-        var messageField = form.find('#message');
-        var chatList = $('.ChatList');
-        
-        
-        
-        form.on('submit',function(e){
-            e.preventDefault();
-            var message = {
-                text : messageField.val(),
-                sender : username,
-                type : 'message',
-            } 
-            chatList.append('<div class="container"><p>'+ message.text+ '</p><span class="time-right">'+ formatted_date +'</span></div>');
-            conn.send(JSON.stringify(message));
-        });
-        
+            var chatMsgHst = $('.msg_history');
+            var chatMsg = $('.write_msg');
 
-        conn.onopen = function(e) {
-            console.log("Connection established!");
-            $.ajax({
-                url: 'load_history.php',
-                dataType: 'json',
-                success: function(data) {
-                    $.each(data,function(){
-                       var dt =  this.updated_at.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-                       if(this.user == username){
-                        chatList.append('<div class="container "><p>'+ this.text + '</p><span class="time-right">'+ dt +'</span></div>');
-                       }else{
-                        chatList.append('<div class="container darker"><p>'+ this.text + '</p><span class="time-right">'+ dt +'</span><span class="time-left">'+ this.user +'</span></div>');
-                       }
-                        
-                    })
-                }
-              });
-        };
+            $('.msg_send_btn').click(function(){
+                var message = {
+                    text : chatMsg.val(),
+                    sender : username,
+                    type : 'message',
+                } 
+                chatMsgHst.append('<div class="outgoing_msg"><div class="sent_msg"><p>'+ message.text +'</p><span class="time_date">'+formatted_date+'</span> </div></div>');
 
-        conn.onmessage = function(e) {
-            chatList.append('<div class="container darker"><p>'+ e.data + '</p><span class="time-right">'+ formatted_date +'</span></div>');
-        // console.log(e.data)
-    };
+                conn.send(JSON.stringify(message));
+            });
+            conn.onopen = function(e) {
+                console.log("Connection established!");
+                $.ajax({
+                    url: 'load_history.php',
+                    dataType: 'json',
+                    success: function(data) {
+                        $.each(data,function(){
+                        var dt =  this.updated_at.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                        if(this.user == username){
+                            chatMsgHst.append('<div class="outgoing_msg"><div class="sent_msg"><p>'+this.text+'</p><span class="time_date">'+dt+'</span> </div><div class="incoming_msg_img"></div>');
+                        }else{
+                            chatMsgHst.append('<div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+ this.text +'</p><span class="time_date">'+ dt +'</span></div></div></div>');
+                        }
+                            
+                        })
+                    }
+                });
+            };
+            conn.onmessage = function(e) {
+                chatMsgHst.append('<div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+ e.data +'</p><span class="time_date">'+ formatted_date +'</span></div></div></div>');
+            console.log(e.data)
+            };
+        // Chat Functions
     });
 
     

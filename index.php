@@ -22,7 +22,7 @@ if(!isset($_SESSION['username'])){
 </head>
 <body>
 
-    <div class="container-fliud">
+    <!-- <div class="container-fliud">
         <input class="name" value="<?php echo $name;?>" hidden>
         <div class="row">
             <div class="col-md-12" style="margin-top:10px" ><a href="logout.php" class="btn btn-secondary" style="float:right; margin-right:3px;">Logout</a></div>
@@ -66,7 +66,7 @@ if(!isset($_SESSION['username'])){
             </div>      
             
         </div>
-    </div>
+    </div> -->
 <script src="js/jquery-3.4.1.js"></script>
 <script src="js/main.js"></script>
 <script src="js/jquery.cookie.js"></script>
