@@ -21,14 +21,27 @@ class Chat implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $from, $msg){
-        foreach($this->clients as $client){
-            if($client !== $from){
-                $client->send($msg);
-            }
+        
+        $msg = json_decode($msg);
+
+        switch ($msg->type) {
+            case 'message':
+                foreach($this->clients as $client){
+                    if($client !== $from){
+                        $client->send($msg->text);
+                    }
+                }
+                Message::create([
+                    'text' => $msg->text,
+                    'user' => $msg->sender,
+                ]);
+                break;
+            
+            default:
+                # code...
+                break;
         }
-        Message::create([
-            'text' => $msg
-        ]);
+        
     }
 
     public function onClose(ConnectionInterface $conn){
