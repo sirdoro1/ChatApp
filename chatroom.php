@@ -59,17 +59,16 @@ if(!isset($_SESSION['username'])){
           <div class="inbox_chat">
             <?php foreach($users as $user){
                 if(!($_SESSION['name']== $user->name)){ ?>
-            <div class="chat_list active_chat">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5><?php echo $user->name; ?> <span class="chat_date"><i class="fa fa-globe" aria-hidden="true"></i></span></h5>
-                  <p>This is a fucking evidence.</p>
+                <div class="chat_list active_chat">
+                <div class="chat_people">
+                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="chat_ib">
+                    <h5><?php echo $user->name; ?> <span class="chat_date"><i class="fa fa-globe" aria-hidden="true"></i></span></h5>
+                    <!-- <p>This is a fucking evidence.</p> -->
+                    </div>
                 </div>
-              </div>
-
-            <?php } }?>
-            </div>
+                </div>
+            <?php }}?>
           </div>
         </div>
         <!-- Contact Area -->
