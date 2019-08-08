@@ -1,71 +1,93 @@
     $(document).ready(function(){
 
-       
-        var username = $('.name').val();
-        
-        
-
         $('#signupform').hide();
         $('#signinform').show();
         $('#signinbtn').hide();
 
-
-        $('#signupbtn').click(function(){
+        $(document).on('click','#signupbtn',function(e){
             $('#signinform').hide();
             $('#signupform').fadeIn();
             $('#signinbtn').show();
             $('#signupbtn').hide();
         })
-
-        $('#signinbtn').click(function(){
+        $(document).on('click','#signinbtn',function(e){
             $('#signupform').hide();
             $('#signinform').fadeIn();
             $('#signinbtn').hide();
             $('#signupbtn').show();
         });
+        $(document).on('click','.chat_list',function(e){
+            e.preventDefault();
+            to_user_id = $(this).data('touserid');
+            fetch_user_chat_history(to_user_id);
 
+            setInterval(function(){
+                update_chat_history_data()
+            },5000)
+            function update_chat_history_data(){
+                $('.msg_history').each(function(){
+                    var to_user_id = $('.msg_history').data('touserid')
+                    fetch_user_chat_history(to_user_id)
+                })
+            }
 
-        // Chat
-            var date = new Date(),
-            formatted_date = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-            var conn = new WebSocket('ws://localhost:8080');
+        })
 
-            var chatMsgHst = $('.msg_history');
-            var chatMsg = $('.write_msg');
+        
+        $(document).on('click','.msg_send_btn',function(){
+            // console.log($('.outgoing_msg').data('fromuserid'));
+            var users = {
+                $touser: $('.outgoing_msg').data('touserid'),
+                $message: $('.write_msg').val(),
+            }
+            $.ajax({
+                url: "insert.php",
+                method:"POST",
+                data: users,
+                success:function(data){
+                    $('.write_msg').val('');
+                }
+            })
+        })
 
-            $('.msg_send_btn').click(function(){
-                var message = {
-                    text : chatMsg.val(),
-                    sender : username,
-                    type : 'message',
-                } 
-                chatMsgHst.append('<div class="outgoing_msg"><div class="sent_msg"><p>'+ message.text +'</p><span class="time_date">'+formatted_date+'</span> </div></div>');
+        setInterval(function(){
+            update_last_activity();
+            fetch_users();
+        },5000)
+        
+        fetch_users();
 
-                conn.send(JSON.stringify(message));
-            });
-            conn.onopen = function(e) {
-                console.log("Connection established!");
-                $.ajax({
-                    url: 'load_history.php',
-                    dataType: 'json',
-                    success: function(data) {
-                        $.each(data,function(){
-                        var dt =  this.updated_at.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-                        if(this.user == username){
-                            chatMsgHst.append('<div class="outgoing_msg"><div class="sent_msg"><p>'+this.text+'</p><span class="time_date">'+dt+'</span> </div><div class="incoming_msg_img"></div>');
-                        }else{
-                            chatMsgHst.append('<div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+ this.text +'</p><span class="time_date">'+ dt +'</span></div></div></div>');
-                        }
-                            
-                        })
-                    }
-                });
-            };
-            conn.onmessage = function(e) {
-                chatMsgHst.append('<div class="incoming_msg"><div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div><div class="received_msg"><div class="received_withd_msg"><p>'+ e.data +'</p><span class="time_date">'+ formatted_date +'</span></div></div></div>');
-            console.log(e.data)
-            };
-        // Chat Functions
+        function fetch_users(){
+            $.ajax({
+                url: 'fetch_users.php',
+                method: 'POST',
+                success:function(data){
+                    $('#inbox_chat').html(data);
+                }
+            })
+        }
+
+        function update_last_activity(){
+            $.ajax({
+                url: 'update_last_activity.php',
+                success:function(data){
+                }
+            })
+        }
+
+        function fetch_user_chat_history(to_user_id){
+            $.ajax({
+                url: "fetch_user_chat_history.php",
+                method: "POST",
+                data:{
+                    to_user_id:to_user_id,
+                },
+                success:function(data){
+                    $('.msg_history').html(data);
+                }
+            })
+        }
+        
     });
 
     

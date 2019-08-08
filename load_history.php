@@ -1,6 +1,20 @@
 <?php
-require('vendor/autoload.php');
+include('connection.php');
 
-use ChatApp\Model\Message;
+// if($_SERVER['REQUEST_METHOD']=='POST'){
 
-echo Message::all()->toJson();
+    
+    $fromuser = $_POST['from_user'];
+     $touser =  $_POST['to_user'];
+
+    $test = $conn->prepare("SELECT * FROM conversation WHERE fromuser='$fromuser' AND touser='$touser' ");
+    $test->execute();
+
+    while($row = $test->fetch(PDO::FETCH_ASSOC)){
+        $messages[]=$row;
+    }
+    echo json_encode($messages);
+    
+// }
+
+

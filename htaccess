@@ -1,0 +1,6 @@
+Options -Indexes
+Options +FollowSymlinks -Multiviews
+DirectoryIndex index.php
+RewriteEngine On
+RewriteRule ^home?$ index.php
+RewriteRule ^chatroom?$ chatroom.php

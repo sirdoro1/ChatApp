@@ -4,14 +4,19 @@ $name = $_SESSION['name'];
 $email = $_SESSION['email'];
 $username = $_SESSION['username'];
 
+
+
 if(!isset($_SESSION['username'])){
     header('location:login-register.php');
     die();
   }
+else{
+    header('location:chatroom.php');
+}
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,11 +24,11 @@ if(!isset($_SESSION['username'])){
     <title>Document</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+</head> -->
+<!-- <body> -->
 
     <!-- <div class="container-fliud">
-        <input class="name" value="<?php echo $name;?>" hidden>
+        <input class="name" value="" hidden>
         <div class="row">
             <div class="col-md-12" style="margin-top:10px" ><a href="logout.php" class="btn btn-secondary" style="float:right; margin-right:3px;">Logout</a></div>
         </div>
@@ -67,11 +72,11 @@ if(!isset($_SESSION['username'])){
             
         </div>
     </div> -->
-<script src="js/jquery-3.4.1.js"></script>
-<script src="js/main.js"></script>
-<script src="js/jquery.cookie.js"></script>
+<!-- <script src="js/jquery-3.4.1.js"></script> -->
+<!-- <script src="js/main.js"></script> -->
+<!-- <script src="js/jquery.cookie.js"></script> -->
     
-</body>
+<!-- </body> -->
 
-</html>
+<!-- </html> -->
 
