@@ -35,9 +35,8 @@
 
         
         $(document).on('click','.msg_send_btn',function(){
-            // console.log($('.outgoing_msg').data('fromuserid'));
             var users = {
-                $touser: $('.outgoing_msg').data('touserid'),
+                $touser: $('.msg_sit').data('touserid'),
                 $message: $('.write_msg').val(),
             }
             $.ajax({

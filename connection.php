@@ -31,11 +31,11 @@ function fetch_user_chat_history($from_user_id,$to_user_id,$conn){
     $results  = $chats->fetchAll();
     $fromuser = '';
     $touser = '';
-    $output = '';
+    $output = '<div  id="msg_sit" class="msg_sit" data-touserid="'.$to_user_id.'" data-fromuserid="'.$from_user_id.'">';
         foreach($results as $row){
             if($row["fromuser"] == $from_user_id)
             {
-                $output .= '<div class="outgoing_msg" data-touserid="'.$to_user_id.'" data-fromuserid="'.$from_user_id.'">
+                $output .= '<div class="outgoing_msg">
                                 <div class="sent_msg">
                                     <p>'.$row["message"].'</p>
                                     <span class="time_date">'.$row["created_at"].'</span>
